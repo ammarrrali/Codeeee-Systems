@@ -5,11 +5,19 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import GlowCard from "./GlowCard";
 
-const fade = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
-};
+import { Variants } from "framer-motion";
 
+const fade: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.16, 1, 0.3, 1], // easeOut cubic-bezier
+    },
+  },
+};
 export default function Contact() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");

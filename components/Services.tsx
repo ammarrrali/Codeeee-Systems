@@ -1,20 +1,34 @@
 // components/Services.tsx
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import GlowCard from "./GlowCard";
 import BinaryBackground from "./BinaryBackground";
 import BinaryRevealText from "./BinaryRevealText";
 import TiltCard from "./TiltCard";
 
-const sectionFade = {
+const sectionFade: Variants = {
   hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
 };
 
-const cardAnim = {
+const cardAnim: Variants = {
   hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
 };
 
 const services = [
@@ -31,7 +45,12 @@ const services = [
   {
     title: "Web Apps & Portals",
     subtitle: "Dashboards, client portals, admin panels—built like software.",
-    bullets: ["Secure access", "Role-based users", "Dashboards", "Custom workflows"],
+    bullets: [
+      "Secure access",
+      "Role-based users",
+      "Dashboards",
+      "Custom workflows",
+    ],
     code: `export const portal = {
   users: ["admin", "staff", "client"],
   features: ["roles", "reports", "automation"],
@@ -51,7 +70,12 @@ const services = [
   {
     title: "Automation & AI Workflows",
     subtitle: "Workflow automation with integrations (WhatsApp, email, APIs).",
-    bullets: ["Workflow automation", "AI-assisted flows", "Integrations", "API setup"],
+    bullets: [
+      "Workflow automation",
+      "AI-assisted flows",
+      "Integrations",
+      "API setup",
+    ],
     code: `export const automation = {
   triggers: ["form_submit", "new_order"],
   actions: ["notify", "assign", "follow_up"]
@@ -96,7 +120,11 @@ export default function Services() {
             </p>
 
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-              <BinaryRevealText text="What we build" durationMs={2200} delayMs={120} />
+              <BinaryRevealText
+                text="What we build"
+                durationMs={2200}
+                delayMs={120}
+              />
             </h2>
 
             <p className="mt-3 max-w-2xl text-white/75">
@@ -117,92 +145,78 @@ export default function Services() {
           </div>
         </div>
 
-        {/* OFFER STRIP (move offer UP so everyone sees it) */}
-        <div className="mt-8">
-          <div className="rounded-2xl border border-cyan-400/20 bg-cyan-500/5 px-5 py-4 backdrop-blur">
-            <div className="font-mono text-xs text-cyan-300">
-              {">"} prototype.validation
-            </div>
-
-            <p className="mt-1 text-sm text-white/85">
-              <span className="text-cyan-300 font-semibold">Eligible businesses</span>{" "}
-              can request a{" "}
-              <span className="text-cyan-300 font-semibold">free prototype website</span>{" "}
-              to validate design direction before full development.
-            </p>
-
-            <p className="mt-2 text-[11px] text-white/55 font-mono">
-              *websites only • eligibility depends on business type
-            </p>
-          </div>
-        </div>
-
         {/* Cards */}
         <motion.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ staggerChildren: 0.1 }}
+          transition={{ staggerChildren: 0.08 }}
           className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2"
         >
           {services.map((s, i) => (
-            <motion.div
-              key={s.title}
-              variants={cardAnim}
-              className={i === services.length - 1 ? "md:col-span-2" : ""}
-            >
-              <TiltCard className="h-full" maxTilt={10} perspective={1100}>
-                <GlowCard className="h-full">
-                  {/* Title decode */}
-                  <div className="font-mono text-sm text-cyan-200">
-                    {">"}{" "}
-                    <BinaryRevealText text={s.title} durationMs={1800} delayMs={140} />
-                  </div>
+  <motion.div
+    key={s.title}
+    variants={cardAnim}
+    className={i === services.length - 1 ? "md:col-span-2" : ""}
+  >
 
-                  {/* Subtitle decode */}
-                  <p className="mt-2 text-white/75 text-sm">
-                    <BinaryRevealText text={s.subtitle} durationMs={2400} delayMs={240} />
-                  </p>
+            <TiltCard className="h-full" maxTilt={9} perspective={1100} scale={1.02} lift={6}>
+  <GlowCard className="h-full">
+    {/* Title decode */}
+    <div className="font-mono text-sm text-cyan-200">
+      {">"}{" "}
+      <BinaryRevealText text={s.title} durationMs={1800} delayMs={140} />
+    </div>
 
-                  <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                    <ul className="space-y-2 text-xs text-white/70">
-                      {s.bullets.map((b, idx) => (
-                        <li key={b} className="flex gap-2">
-                          <span className="text-cyan-400">▸</span>
-                          <span>
-                            <BinaryRevealText
-                              text={b}
-                              durationMs={1400}
-                              delayMs={280 + idx * 60}
-                            />
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+    {/* Subtitle decode */}
+    <p className="mt-2 text-white/75 text-sm">
+      <BinaryRevealText text={s.subtitle} durationMs={2200} delayMs={240} />
+    </p>
 
-                    <div className="rounded-xl border border-white/10 bg-black/45 p-3 font-mono text-[10px] leading-relaxed text-cyan-100/60">
-                      <pre className="whitespace-pre-wrap">{s.code}</pre>
-                    </div>
-                  </div>
-                </GlowCard>
-              </TiltCard>
+    <div className="mt-5 grid gap-4 lg:grid-cols-2">
+      <ul className="space-y-2 text-xs text-white/70">
+        {s.bullets.map((b) => (
+          <li key={b} className="flex gap-2">
+            <span className="text-cyan-400">▸</span>
+            <span>
+              <BinaryRevealText text={b} durationMs={1400} delayMs={280} />
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="rounded-xl border border-white/10 bg-black/45 p-3 font-mono text-[10px] leading-relaxed text-cyan-100/60">
+        <pre className="whitespace-pre-wrap">{s.code}</pre>
+      </div>
+    </div>
+  </GlowCard>
+</TiltCard>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Optional: Bottom reinforcement (short, not duplicate) */}
+        {/* Bottom Card */}
         <div className="mt-10">
           <GlowCard>
             <div className="font-mono text-sm text-cyan-200">
               {">"}{" "}
-              <BinaryRevealText text="next_step" durationMs={1600} delayMs={140} />
+              <BinaryRevealText
+                text="low_risk_start"
+                durationMs={1800}
+                delayMs={160}
+              />
             </div>
+
             <p className="mt-2 text-white/80">
               <BinaryRevealText
-                text="Tell us your business type + goal. We'll recommend the best build path and if you're eligible, a prototype option."
+                text="For selected business types, we can provide a starter website preview so you can evaluate direction before committing."
                 durationMs={2600}
-                delayMs={220}
+                delayMs={240}
               />
+            </p>
+
+            <p className="mt-1 text-sm text-white/55 font-mono">
+              *websites only • eligibility depends on business type
             </p>
           </GlowCard>
         </div>

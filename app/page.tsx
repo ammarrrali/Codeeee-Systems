@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import FxBackground from "../components/FxBackground";
 import BinaryDecodeText from "../components/BinaryDecodeText";
 import Services from "../components/Services";
@@ -15,16 +15,19 @@ import ConsultationFunnel from "../components/ConsultationFunnel";
 import SystemStatus from "../components/SystemStatus";
 import CapabilitiesReel from "../components/CapabilitiesReel";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
+    transition: {
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1],
+    },
   },
 };
 
-const stagger = {
+const stagger: Variants = {
   show: {
     transition: { staggerChildren: 0.12 },
   },
