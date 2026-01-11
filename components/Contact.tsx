@@ -184,9 +184,7 @@ export default function Contact() {
                 &gt; send_request
               </button>
 
-              <p className="text-xs text-white/50 font-mono">
-                (UI-only right now) We’ll wire this to WhatsApp/email next.
-              </p>
+              
             </form>
           </GlowCard>
         </div>
