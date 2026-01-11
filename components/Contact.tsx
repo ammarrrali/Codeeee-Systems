@@ -36,26 +36,46 @@ export default function Contact() {
   };
 }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  // 🔁 REPLACE with your real WhatsApp number (no +, no spaces)
-  // Example Pakistan: 923001234567
+  // your company WhatsApp number (no +, no spaces)
   const COMPANY_WA = "923361287518";
 
-  const text =
+  const body =
     `*CODEEEE Consultation Request*` +
-    `\n\n` +
-    `*Name:* ${name}` +
-    `\n*Contact:* ${contact}` +
+    `\n\n*Name:* ${name}` +
+    `\n*Client Contact:* ${contact}` +
     `\n\n*Brief:* \n${message}`;
 
-  const url = `https://wa.me/${COMPANY_WA}?text=${encodeURIComponent(text)}`;
+  // 1) Send email automatically (server-side)
+  try {
+    const res = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        contact,
+        message,
+        pageUrl: window.location.href,
+      }),
+    });
 
-  // Open WhatsApp (new tab)
-  window.open(url, "_blank", "noopener,noreferrer");
+    const data = await res.json();
+    if (!data.ok) {
+      alert(data.error || "Failed to send email");
+      return;
+    }
+  } catch (err: any) {
+    alert(err?.message || "Failed to send email");
+    return;
+  }
 
-  // Optional: clear after sending
+  // 2) Open WhatsApp (client-side)
+  const waUrl = `https://wa.me/${COMPANY_WA}?text=${encodeURIComponent(body)}`;
+  window.open(waUrl, "_blank", "noopener,noreferrer");
+
+  // Optional: clear after success
   // setName("");
   // setContact("");
   // setMessage("");
@@ -90,7 +110,7 @@ export default function Contact() {
             <div className="mt-4 flex flex-col gap-3">
               {/* WhatsApp (replace number) */}
               <a
-                href="https://wa.me/923000000000?text=Hi%20CODEEEE%2C%20I%20want%20a%20website%2Fsoftware%20quote."
+                href="https://wa.me/447399170468?text=Hi%20CODEEEE%2C%20I%20want%20a%20website%2Fsoftware%20quote."
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-mono text-sm text-white/85 transition hover:border-cyan-400/40 hover:bg-white/10"
@@ -100,7 +120,7 @@ export default function Contact() {
 
               {/* Email (replace) */}
               <a
-                href="mailto:hello@codeeee.com?subject=Free%20Consultation%20Request"
+                href="mailto:codeeee.systems@gmail.com?subject=Free%20Consultation%20Request"
                 className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-mono text-sm text-white/85 transition hover:border-cyan-400/40 hover:bg-white/10"
               >
                 &gt; email_us <span className="text-white/50">(formal)</span>
