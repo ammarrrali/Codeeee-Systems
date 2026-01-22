@@ -73,7 +73,7 @@ export default function MagneticButton({
       onClick={onClick}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
+      transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1]}}
       className={`will-change-transform transition-transform duration-200 ease-out ${className}`}
     >
       {children}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://codeeee-systems-4v7n.vercel.app/sitemap.xml
